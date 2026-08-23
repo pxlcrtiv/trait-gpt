@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trait-gpt"
+version = "0.1.0"
+description = "Rarity score + AI-written description for any NFT collection: trait statistics, CLIP zero-shot attribute tags, BLIP captions — all on CPU, no GPU, no paid APIs."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "pxlcrtiv" }]
+keywords = ["nft", "rarity", "clip", "blip", "huggingface", "streamlit", "machine-learning", "opensea", "reservoir"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "streamlit>=1.36",
+    "pandas>=2.0",
+    "pillow>=10.0",
+    "numpy>=1.26",
+    "huggingface_hub>=0.24",
+    "transformers>=4.40",
+    "torch>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+trait-gpt = "trait_gpt.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["trait_gpt*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "network: hits the network (HF Hub / Reservoir) - usually skipped",
+    "slow: needs model downloads or heavy inference",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["docs", "data"]
+
+[tool.ruff.lint]
+# Intentional deviations (with rationale):
+#   BLE001  - model/backend failures are caught and degraded to fallbacks
+#             (CLIP -> keyword, BLIP -> template); the demo must never crash.
+ignore = ["BLE001"]

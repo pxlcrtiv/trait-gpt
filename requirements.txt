@@ -1,0 +1,9 @@
+# Core runtime (CPU-only). The demo works with no models at all — CLIP and
+# BLIP are optional one-time downloads through transformers/huggingface_hub.
+streamlit>=1.36
+pandas>=2.0
+pillow>=10.0
+numpy>=1.26
+huggingface_hub>=0.24
+transformers>=4.40
+torch>=2.0

@@ -1,0 +1,278 @@
+{
+  "name": "Pixel Cats",
+  "slug": "pixel-cats",
+  "description": "A tiny generative cat collection used as trait-gpt's zero-key demo fixture. 24 tokens, 4 traits, procedurally rendered art \u2014 the rarity table, attribute tags and descriptions in the README all come from this file.",
+  "n_tokens": 24,
+  "traits": [
+    "background",
+    "skin",
+    "eyes",
+    "accessory"
+  ],
+  "tokens": [
+    {
+      "token_id": 1,
+      "name": "Pixel Cat #1",
+      "traits": {
+        "background": "sunset",
+        "skin": "white",
+        "eyes": "amber",
+        "accessory": "none"
+      },
+      "image": "generated://1000"
+    },
+    {
+      "token_id": 2,
+      "name": "Pixel Cat #2",
+      "traits": {
+        "background": "midnight",
+        "skin": "grey",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1001"
+    },
+    {
+      "token_id": 3,
+      "name": "Pixel Cat #3",
+      "traits": {
+        "background": "forest",
+        "skin": "orange",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1002"
+    },
+    {
+      "token_id": 4,
+      "name": "Pixel Cat #4",
+      "traits": {
+        "background": "ocean",
+        "skin": "grey",
+        "eyes": "green",
+        "accessory": "scarf"
+      },
+      "image": "generated://1003"
+    },
+    {
+      "token_id": 5,
+      "name": "Pixel Cat #5",
+      "traits": {
+        "background": "sunset",
+        "skin": "orange",
+        "eyes": "green",
+        "accessory": "goggles"
+      },
+      "image": "generated://1004"
+    },
+    {
+      "token_id": 6,
+      "name": "Pixel Cat #6",
+      "traits": {
+        "background": "ocean",
+        "skin": "white",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1005"
+    },
+    {
+      "token_id": 7,
+      "name": "Pixel Cat #7",
+      "traits": {
+        "background": "gold",
+        "skin": "black",
+        "eyes": "sapphire",
+        "accessory": "crown"
+      },
+      "image": "generated://1006"
+    },
+    {
+      "token_id": 8,
+      "name": "Pixel Cat #8",
+      "traits": {
+        "background": "ocean",
+        "skin": "grey",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1007"
+    },
+    {
+      "token_id": 9,
+      "name": "Pixel Cat #9",
+      "traits": {
+        "background": "sunset",
+        "skin": "grey",
+        "eyes": "blue",
+        "accessory": "none"
+      },
+      "image": "generated://1008"
+    },
+    {
+      "token_id": 10,
+      "name": "Pixel Cat #10",
+      "traits": {
+        "background": "midnight",
+        "skin": "black",
+        "eyes": "green",
+        "accessory": "scarf"
+      },
+      "image": "generated://1009"
+    },
+    {
+      "token_id": 11,
+      "name": "Pixel Cat #11",
+      "traits": {
+        "background": "sunset",
+        "skin": "orange",
+        "eyes": "blue",
+        "accessory": "none"
+      },
+      "image": "generated://1010"
+    },
+    {
+      "token_id": 12,
+      "name": "Pixel Cat #12",
+      "traits": {
+        "background": "ocean",
+        "skin": "orange",
+        "eyes": "green",
+        "accessory": "goggles"
+      },
+      "image": "generated://1011"
+    },
+    {
+      "token_id": 13,
+      "name": "Pixel Cat #13",
+      "traits": {
+        "background": "ocean",
+        "skin": "orange",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1012"
+    },
+    {
+      "token_id": 14,
+      "name": "Pixel Cat #14",
+      "traits": {
+        "background": "sunset",
+        "skin": "orange",
+        "eyes": "green",
+        "accessory": "scarf"
+      },
+      "image": "generated://1013"
+    },
+    {
+      "token_id": 15,
+      "name": "Pixel Cat #15",
+      "traits": {
+        "background": "sunset",
+        "skin": "orange",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1014"
+    },
+    {
+      "token_id": 16,
+      "name": "Pixel Cat #16",
+      "traits": {
+        "background": "sunset",
+        "skin": "orange",
+        "eyes": "blue",
+        "accessory": "none"
+      },
+      "image": "generated://1015"
+    },
+    {
+      "token_id": 17,
+      "name": "Pixel Cat #17",
+      "traits": {
+        "background": "ocean",
+        "skin": "grey",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1016"
+    },
+    {
+      "token_id": 18,
+      "name": "Pixel Cat #18",
+      "traits": {
+        "background": "forest",
+        "skin": "white",
+        "eyes": "blue",
+        "accessory": "none"
+      },
+      "image": "generated://1017"
+    },
+    {
+      "token_id": 19,
+      "name": "Pixel Cat #19",
+      "traits": {
+        "background": "sunset",
+        "skin": "orange",
+        "eyes": "amber",
+        "accessory": "none"
+      },
+      "image": "generated://1018"
+    },
+    {
+      "token_id": 20,
+      "name": "Pixel Cat #20",
+      "traits": {
+        "background": "forest",
+        "skin": "orange",
+        "eyes": "amber",
+        "accessory": "none"
+      },
+      "image": "generated://1019"
+    },
+    {
+      "token_id": 21,
+      "name": "Pixel Cat #21",
+      "traits": {
+        "background": "sunset",
+        "skin": "black",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1020"
+    },
+    {
+      "token_id": 22,
+      "name": "Pixel Cat #22",
+      "traits": {
+        "background": "forest",
+        "skin": "orange",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1021"
+    },
+    {
+      "token_id": 23,
+      "name": "Pixel Cat #23",
+      "traits": {
+        "background": "sunset",
+        "skin": "grey",
+        "eyes": "green",
+        "accessory": "none"
+      },
+      "image": "generated://1022"
+    },
+    {
+      "token_id": 24,
+      "name": "Pixel Cat #24",
+      "traits": {
+        "background": "sunset",
+        "skin": "white",
+        "eyes": "sapphire",
+        "accessory": "none"
+      },
+      "image": "generated://1023"
+    }
+  ]
+}

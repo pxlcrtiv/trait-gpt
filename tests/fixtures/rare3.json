@@ -1,0 +1,27 @@
+{
+  "name": "Rare Three",
+  "slug": "rare3",
+  "description": "Tiny handcrafted collection with hand-computable rarity golden values.",
+  "n_tokens": 3,
+  "traits": ["background", "eyes"],
+  "tokens": [
+    {
+      "token_id": 1,
+      "name": "Alpha",
+      "traits": {"background": "red", "eyes": "green"},
+      "image": ""
+    },
+    {
+      "token_id": 2,
+      "name": "Beta",
+      "traits": {"background": "red", "eyes": "blue"},
+      "image": ""
+    },
+    {
+      "token_id": 3,
+      "name": "Gamma",
+      "traits": {"background": "blue", "eyes": "blue"},
+      "image": ""
+    }
+  ]
+}
