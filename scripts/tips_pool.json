@@ -1,0 +1,127 @@
+[
+  {
+    "title": "Statistical rarity is just N / count — understand it before scoring",
+    "body": "The classic trait rarity of a value is `N / count(value)`: a trait value held by 1 of 24 tokens scores 24.0, one held by 12 scores 2.0. Every serious rarity engine (trait-gpt included) starts here. The subtle part is aggregation: mean over traits (trait-count-normalized, what trait-gpt scores) vs plain sum. Two tokens can tie on the mean yet differ wildly on the sum — pick one convention, document it, and never mix the two in one table.",
+    "command": "trait-gpt rank --json"
+  },
+  {
+    "title": "Rarity ≠ value. Never present them as the same thing",
+    "body": "A token can be the statistically rarest in a collection and still worthless, because rarity only measures trait *scarcity*, not aesthetic demand or community history. trait-gpt calls its output a rarity score — not a price forecast — and the README says the NFT market has cooled. If you build on top of this, keep the distinction crisp in your UI too.",
+    "command": "trait-gpt rank --top 3"
+  },
+  {
+    "title": "Trait-count normalization stops 'more traits = rarer' bias",
+    "body": "A token with 8 traits accumulates a bigger rarity *sum* than an otherwise identical token with 4 — pure bias, not information. Normalizing by trait count (scoring the mean trait rarity, which trait-gpt does) puts every token on the same footing, so a 4-trait token can beat an 8-trait token on merit. Golden test: tokens that tie on the mean must tie on the rank, regardless of their sums.",
+    "command": "trait-gpt rank --top 5"
+  },
+  {
+    "title": "Competition ranking ('1224') is the honest way to rank ties",
+    "body": "Olympic-style competition ranking gives tied tokens the same rank and then skips: scores [3.0, 2.25, 2.25, 1.5] rank as 1, 2, 2, 4 — no fake ordering between equals, and the total number of rank-1 tokens is visible. Dense ranking ('1233') and ordinal ranking both misrepresent ties. trait-gpt's `rank_collection` uses competition ranking, and its golden tests pin the 1,1,3 pattern.",
+    "command": "trait-gpt rank"
+  },
+  {
+    "title": "Percentiles need a defined direction — 0.0 is rarest here",
+    "body": "Sites differ: some report percentile 99 for the rarest, others 0. trait-gpt defines percentile = 100 * (rank-1) / (N-1) so 0.0 means rarest and 100.0 means most common, and the Streamlit app renders a progress bar as 1.0 - percentile/100 so the rarest token shows a full bar. Document your direction in one sentence; a silent convention flip breaks every downstream comparison.",
+    "command": "trait-gpt rank --top 1 --json"
+  },
+  {
+    "title": "CLIP zero-shot tagging: fixed candidate list beats free-form prompts",
+    "body": "Zero-shot image classification scores the image against *your* candidate labels — the output can only be as good as the list. Use a curated, distinct label set (\"pixel art\", \"royal crown\", \"vaporwave\"…), keep labels short and visual, and drop candidates below a confidence floor (trait-gpt keeps score >= top * 0.01). Broad overlapping labels make the model hedge and the tags go mushy.",
+    "command": "trait-gpt tags 7 --clip"
+  },
+  {
+    "title": "Small models on CPU are a feature, not a compromise",
+    "body": "CLIP ViT-B/32 zero-shot tags a 384×384 image in well under a second on a laptop CPU once the model is loaded. BLIP-base captions one in a few seconds. For batch jobs, load the pipeline once and reuse it (Streamlit `@st.cache_resource` does exactly this) — pipeline construction is the expensive part, inference is cheap.",
+    "command": "pip install -r requirements.txt && streamlit run app.py"
+  },
+  {
+    "title": "Graceful degradation: model paths must never be hard requirements",
+    "body": "A demo that dies when a model can't download is a broken demo. trait-gpt's rule: CLIP missing → keyword tags derived from traits (labeled `keyword`); BLIP missing → template description (labeled `template`). Every result carries a `method` field so the UI can say exactly which path produced it — an honest fallback beats a silent fake.",
+    "command": "trait-gpt tags 7"
+  },
+  {
+    "title": "Golden tests pin the math; mocks pin the plumbing",
+    "body": "Rarity formulas deserve golden tests with hand-computed expected values (trait-gpt ships rare3.json: three tokens whose scores 2.25 / 1.5 / 2.25 and ranks 1 / 3 / 1 are verified by hand in the test docstring). Model code deserves mocks — a fake pipeline returning canned scores verifies label selection and thresholding without downloading 600 MB. Keep the suite green with no network.",
+    "command": "python -m pytest tests/ -q"
+  },
+  {
+    "title": "Determinism is a feature: same input, same output, same bytes",
+    "body": "trait-gpt's rarity engine is pure math (no randomness), its fixture regenerates byte-identically from a fixed seed, and its procedural token art renders to identical PNG bytes every run — all pinned by tests. When numbers or images shift run-to-run, users can't reproduce your claims. Any randomness you add (art jitter, tie-breaking) needs a documented, fixed seed.",
+    "command": "python data/fixtures/make_fixture.py"
+  },
+  {
+    "title": "A bundled fixture makes the demo work with zero keys and zero network",
+    "body": "Real collection APIs need keys; model hubs need bandwidth. trait-gpt ships an offline fixture collection (24 Pixel Cats, 4 traits, procedurally rendered art) so `streamlit run app.py` shows the full rarity → tags → descriptions pipeline with no environment setup. The Reservoir client is a real optional path — the fixture is the guarantee.",
+    "command": "streamlit run app.py"
+  },
+  {
+    "title": "Template descriptions with trait interpolation are grammatically tricky — handle articles",
+    "body": "English articles depend on the noun: 'a crown' but 'aviator goggles' and 'no accessory'. A naive 'wearing a {value}' template produces 'wearing a goggles'. trait-gpt's template path keeps a small article map for accessories and falls back to trait-specific sentence templates for everything else. If your templates interpolate nouns, ship an article table and test it (`test_accessory_articles`).",
+    "command": "trait-gpt describe 7"
+  },
+  {
+    "title": "Label which model path ran — in the data, not just the UI",
+    "body": "trait-gpt returns `method: clip | keyword` on every tag result and `template | blip` on every description, so logs, JSON exports, and notebooks all know what produced each value. A result without provenance is a claim you can't audit. If you export rarity data, export the method alongside the score.",
+    "command": "trait-gpt describe 7 --json"
+  },
+  {
+    "title": "Reservoir tokenIds arrive as strings — sometimes 'contract:tokenId'",
+    "body": "The Reservoir v7 API returns tokenId as an int for some contracts and `0xcontract:tokenId` strings for others. trait-gpt's parser splits on the last ':' and coerces to int, with tests pinning both forms. If you parse ERC-721 data from any API, expect the string form and normalize early — a crash halfway through a batch is the alternative.",
+    "command": "python -c \"from trait_gpt.collection import load_collection; c = load_collection(); print(c.n_tokens, 'tokens')\""
+  },
+  {
+    "title": "The rarity curve tells you more than the #1 token",
+    "body": "A collection with one ultra-rare token and 23 near-identical commons has a different market dynamic than one with a smooth rarity curve. Plot the score distribution, not just the leaderboard: trait-gpt's app shows the full table plus trait-frequency bars, which makes the shape of the collection visible at a glance. Extrapolating from the top-1 alone is how bad flips happen.",
+    "command": "trait-gpt stats"
+  },
+  {
+    "title": "Procedural placeholder art keeps demos legal and offline",
+    "body": "Hotlinking real NFT images into a demo repo is both fragile and legally iffy. trait-gpt renders each token's portrait deterministically from its traits (PIL, pure shapes, seeded jitter) — every demo, screenshot, and CI run has images without a single external URL. Artists can swap in real art by pointing the fixture at local files.",
+    "command": "python -m trait_gpt.cli describe 7 --image-out /tmp/cat7.png"
+  },
+  {
+    "title": "Cache images by content hash, not by token id",
+    "body": "trait-gpt's remote-image cache keys files by the URL's sha256, so the same image is never downloaded twice and two tokens sharing an image share a cache entry. Keying by token id double-downloads shared art and breaks when a token's metadata changes. If you fetch metadata at all, make the cache key the content address, not the identity.",
+    "command": "trait-gpt tags 7 --clip --json"
+  },
+  {
+    "title": "Zero-shot models need your vocabulary — trait names are not visual attributes",
+    "body": "CLIP was trained on natural language about *images*, so 'background=gold' scores poorly as a candidate but 'lustrous gold' and 'metallic' score well. Map trait values to visual adjectives before tagging, or accept tags that describe the art style instead of the metadata. trait-gpt's keyword fallback is exactly that map — and it doubles as a good CLIP candidate list.",
+    "command": "trait-gpt tags 7"
+  },
+  {
+    "title": "Streamlit caching: cache resources once, cache data by input",
+    "body": "`@st.cache_resource` reuses the loaded model pipeline across reruns (a 600 MB CLIP load should happen once, not per click); `@st.cache_data` memoizes the rarity DataFrame keyed by its arguments. Failing to split the two makes every interaction in your gallery pay the full model-load cost. trait-gpt's app.py shows the pattern.",
+    "command": "streamlit run app.py"
+  },
+  {
+    "title": "pandas 3 changed defaults — write assertions, not assumptions",
+    "body": "Newer pandas majors change copy semantics and value handling in quiet ways. trait-gpt's `as_dataframe` builds the rarity table from explicit dict rows (`pd.DataFrame([...])`) instead of relying on index/column inference, and the CLI JSON path never touches pandas at all. When your analysis layer and display layer disagree, the golden tests catch it.",
+    "command": "python -m pytest tests/test_rarity.py -q"
+  },
+  {
+    "title": "A rarity API should degrade the same way the demo does",
+    "body": "trait-gpt's `load_collection` resolves: local file path → fixture; anything else → Reservoir (key required); nothing → bundled fixture. Same function, three behaviors, all documented in the docstring, all covered by tests. When your loader has fallbacks, encode the fallback *order* in code and tests — prose in a README drifts, tests don't.",
+    "command": "python -c \"from trait_gpt.collection import load_collection; print(load_collection().name)\""
+  },
+  {
+    "title": "Test the demo path, not just the library",
+    "body": "Library tests prove the math; a CLI smoke test proves the product. trait-gpt's suite runs the real entry point in-process (`main([...])`) and asserts on JSON output, unknown-token exits, and the no-argument fixture default — plus a golden check that the bundled fixture's #7 is rank 1 (score 17.0). If the demo breaks, a test fails.",
+    "command": "trait-gpt rank --json"
+  },
+  {
+    "title": "Document the formula in the README and in the code — twice is not enough",
+    "body": "trait-gpt's rarity formula lives in `trait_gpt/rarity.py`'s module docstring (with the worked rare3 example), in `docs/` section of the README, and in the golden test's comments. Three places, one formula, zero drift — because the tests would fail if any of them contradicted the implementation. A formula you can't reproduce from the README is a bug waiting to happen.",
+    "command": "head -40 trait_gpt/rarity.py"
+  },
+  {
+    "title": "Pause-able automation beats deletable automation",
+    "body": "The Daily Green script respects a `.daily-pause` file or `DAILY_GREEN_PAUSE=1` before doing anything, it is idempotent per day, and it backfills missed days with dated commits — so stopping it is a deliberate, reversible act, not a git surgery. Automations that can only be removed by deleting files get removed by accidents.",
+    "command": "python scripts/daily_update.py"
+  },
+  {
+    "title": "Batch framing matters more than the model choice",
+    "body": "A description of '#7: It gazes out with striking sapphire eyes' beats a caption of 'a cat' every single time for rarity use cases — because the value is in *trait grounding*, not generic accuracy. That's why trait-gpt's default describer is the deterministic template path and BLIP is the optional upgrade. Pick your output's information goal before you pick its model.",
+    "command": "trait-gpt describe 7 && trait-gpt describe 7 --blip"
+  }
+]
