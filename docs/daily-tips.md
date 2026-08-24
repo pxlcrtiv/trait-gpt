@@ -12,3 +12,10 @@ The Reservoir v7 API returns tokenId as an int for some contracts and `0xcontrac
 
 > `python -c "from trait_gpt.collection import load_collection; c = load_collection(); print(c.n_tokens, 'tokens')"`
 
+
+## 2026-08-24 — AI/rarity tip: The rarity curve tells you more than the #1 token
+
+A collection with one ultra-rare token and 23 near-identical commons has a different market dynamic than one with a smooth rarity curve. Plot the score distribution, not just the leaderboard: trait-gpt's app shows the full table plus trait-frequency bars, which makes the shape of the collection visible at a glance. Extrapolating from the top-1 alone is how bad flips happen.
+
+> `trait-gpt stats`
+
