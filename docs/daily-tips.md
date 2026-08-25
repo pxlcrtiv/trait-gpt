@@ -19,3 +19,10 @@ A collection with one ultra-rare token and 23 near-identical commons has a diffe
 
 > `trait-gpt stats`
 
+
+## 2026-08-25 — AI/rarity tip: Procedural placeholder art keeps demos legal and offline
+
+Hotlinking real NFT images into a demo repo is both fragile and legally iffy. trait-gpt renders each token's portrait deterministically from its traits (PIL, pure shapes, seeded jitter) — every demo, screenshot, and CI run has images without a single external URL. Artists can swap in real art by pointing the fixture at local files.
+
+> `python -m trait_gpt.cli describe 7 --image-out /tmp/cat7.png`
+
