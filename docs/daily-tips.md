@@ -26,3 +26,10 @@ Hotlinking real NFT images into a demo repo is both fragile and legally iffy. tr
 
 > `python -m trait_gpt.cli describe 7 --image-out /tmp/cat7.png`
 
+
+## 2026-08-26 — AI/rarity tip: Cache images by content hash, not by token id
+
+trait-gpt's remote-image cache keys files by the URL's sha256, so the same image is never downloaded twice and two tokens sharing an image share a cache entry. Keying by token id double-downloads shared art and breaks when a token's metadata changes. If you fetch metadata at all, make the cache key the content address, not the identity.
+
+> `trait-gpt tags 7 --clip --json`
+
