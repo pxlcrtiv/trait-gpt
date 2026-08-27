@@ -33,3 +33,10 @@ trait-gpt's remote-image cache keys files by the URL's sha256, so the same image
 
 > `trait-gpt tags 7 --clip --json`
 
+
+## 2026-08-27 — AI/rarity tip: Zero-shot models need your vocabulary — trait names are not visual attributes
+
+CLIP was trained on natural language about *images*, so 'background=gold' scores poorly as a candidate but 'lustrous gold' and 'metallic' score well. Map trait values to visual adjectives before tagging, or accept tags that describe the art style instead of the metadata. trait-gpt's keyword fallback is exactly that map — and it doubles as a good CLIP candidate list.
+
+> `trait-gpt tags 7`
+
