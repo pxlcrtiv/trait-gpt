@@ -40,3 +40,10 @@ CLIP was trained on natural language about *images*, so 'background=gold' scores
 
 > `trait-gpt tags 7`
 
+
+## 2026-08-28 — AI/rarity tip: Streamlit caching: cache resources once, cache data by input
+
+`@st.cache_resource` reuses the loaded model pipeline across reruns (a 600 MB CLIP load should happen once, not per click); `@st.cache_data` memoizes the rarity DataFrame keyed by its arguments. Failing to split the two makes every interaction in your gallery pay the full model-load cost. trait-gpt's app.py shows the pattern.
+
+> `streamlit run app.py`
+
