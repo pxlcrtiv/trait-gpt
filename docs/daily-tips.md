@@ -54,3 +54,10 @@ Newer pandas majors change copy semantics and value handling in quiet ways. trai
 
 > `python -m pytest tests/test_rarity.py -q`
 
+
+## 2026-08-30 — AI/rarity tip: A rarity API should degrade the same way the demo does
+
+trait-gpt's `load_collection` resolves: local file path → fixture; anything else → Reservoir (key required); nothing → bundled fixture. Same function, three behaviors, all documented in the docstring, all covered by tests. When your loader has fallbacks, encode the fallback *order* in code and tests — prose in a README drifts, tests don't.
+
+> `python -c "from trait_gpt.collection import load_collection; print(load_collection().name)"`
+
