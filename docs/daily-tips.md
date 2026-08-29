@@ -47,3 +47,10 @@ CLIP was trained on natural language about *images*, so 'background=gold' scores
 
 > `streamlit run app.py`
 
+
+## 2026-08-29 — AI/rarity tip: pandas 3 changed defaults — write assertions, not assumptions
+
+Newer pandas majors change copy semantics and value handling in quiet ways. trait-gpt's `as_dataframe` builds the rarity table from explicit dict rows (`pd.DataFrame([...])`) instead of relying on index/column inference, and the CLI JSON path never touches pandas at all. When your analysis layer and display layer disagree, the golden tests catch it.
+
+> `python -m pytest tests/test_rarity.py -q`
+
