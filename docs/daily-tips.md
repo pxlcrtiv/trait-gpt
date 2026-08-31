@@ -61,3 +61,10 @@ trait-gpt's `load_collection` resolves: local file path → fixture; anything el
 
 > `python -c "from trait_gpt.collection import load_collection; print(load_collection().name)"`
 
+
+## 2026-08-31 — AI/rarity tip: Test the demo path, not just the library
+
+Library tests prove the math; a CLI smoke test proves the product. trait-gpt's suite runs the real entry point in-process (`main([...])`) and asserts on JSON output, unknown-token exits, and the no-argument fixture default — plus a golden check that the bundled fixture's #7 is rank 1 (score 17.0). If the demo breaks, a test fails.
+
+> `trait-gpt rank --json`
+
