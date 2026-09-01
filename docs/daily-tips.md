@@ -68,3 +68,10 @@ Library tests prove the math; a CLI smoke test proves the product. trait-gpt's s
 
 > `trait-gpt rank --json`
 
+
+## 2026-09-01 — AI/rarity tip: Document the formula in the README and in the code — twice is not enough
+
+trait-gpt's rarity formula lives in `trait_gpt/rarity.py`'s module docstring (with the worked rare3 example), in `docs/` section of the README, and in the golden test's comments. Three places, one formula, zero drift — because the tests would fail if any of them contradicted the implementation. A formula you can't reproduce from the README is a bug waiting to happen.
+
+> `head -40 trait_gpt/rarity.py`
+
