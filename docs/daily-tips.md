@@ -75,3 +75,10 @@ trait-gpt's rarity formula lives in `trait_gpt/rarity.py`'s module docstring (wi
 
 > `head -40 trait_gpt/rarity.py`
 
+
+## 2026-09-02 — AI/rarity tip: Pause-able automation beats deletable automation
+
+The Daily Green script respects a `.daily-pause` file or `DAILY_GREEN_PAUSE=1` before doing anything, it is idempotent per day, and it backfills missed days with dated commits — so stopping it is a deliberate, reversible act, not a git surgery. Automations that can only be removed by deleting files get removed by accidents.
+
+> `python scripts/daily_update.py`
+
