@@ -82,3 +82,10 @@ The Daily Green script respects a `.daily-pause` file or `DAILY_GREEN_PAUSE=1` b
 
 > `python scripts/daily_update.py`
 
+
+## 2026-09-03 — AI/rarity tip: Batch framing matters more than the model choice
+
+A description of '#7: It gazes out with striking sapphire eyes' beats a caption of 'a cat' every single time for rarity use cases — because the value is in *trait grounding*, not generic accuracy. That's why trait-gpt's default describer is the deterministic template path and BLIP is the optional upgrade. Pick your output's information goal before you pick its model.
+
+> `trait-gpt describe 7 && trait-gpt describe 7 --blip`
+
