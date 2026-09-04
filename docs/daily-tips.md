@@ -96,3 +96,10 @@ The classic trait rarity of a value is `N / count(value)`: a trait value held by
 
 > `trait-gpt rank --json`
 
+
+## 2026-09-05 — AI/rarity tip: Rarity ≠ value. Never present them as the same thing
+
+A token can be the statistically rarest in a collection and still worthless, because rarity only measures trait *scarcity*, not aesthetic demand or community history. trait-gpt calls its output a rarity score — not a price forecast — and the README says the NFT market has cooled. If you build on top of this, keep the distinction crisp in your UI too.
+
+> `trait-gpt rank --top 3`
+
