@@ -89,3 +89,10 @@ A description of '#7: It gazes out with striking sapphire eyes' beats a caption 
 
 > `trait-gpt describe 7 && trait-gpt describe 7 --blip`
 
+
+## 2026-09-04 — AI/rarity tip: Statistical rarity is just N / count — understand it before scoring
+
+The classic trait rarity of a value is `N / count(value)`: a trait value held by 1 of 24 tokens scores 24.0, one held by 12 scores 2.0. Every serious rarity engine (trait-gpt included) starts here. The subtle part is aggregation: mean over traits (trait-count-normalized, what trait-gpt scores) vs plain sum. Two tokens can tie on the mean yet differ wildly on the sum — pick one convention, document it, and never mix the two in one table.
+
+> `trait-gpt rank --json`
+
