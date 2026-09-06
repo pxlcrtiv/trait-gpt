@@ -103,3 +103,10 @@ A token can be the statistically rarest in a collection and still worthless, bec
 
 > `trait-gpt rank --top 3`
 
+
+## 2026-09-06 — AI/rarity tip: Trait-count normalization stops 'more traits = rarer' bias
+
+A token with 8 traits accumulates a bigger rarity *sum* than an otherwise identical token with 4 — pure bias, not information. Normalizing by trait count (scoring the mean trait rarity, which trait-gpt does) puts every token on the same footing, so a 4-trait token can beat an 8-trait token on merit. Golden test: tokens that tie on the mean must tie on the rank, regardless of their sums.
+
+> `trait-gpt rank --top 5`
+
