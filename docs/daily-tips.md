@@ -110,3 +110,10 @@ A token with 8 traits accumulates a bigger rarity *sum* than an otherwise identi
 
 > `trait-gpt rank --top 5`
 
+
+## 2026-09-07 — AI/rarity tip: Competition ranking ('1224') is the honest way to rank ties
+
+Olympic-style competition ranking gives tied tokens the same rank and then skips: scores [3.0, 2.25, 2.25, 1.5] rank as 1, 2, 2, 4 — no fake ordering between equals, and the total number of rank-1 tokens is visible. Dense ranking ('1233') and ordinal ranking both misrepresent ties. trait-gpt's `rank_collection` uses competition ranking, and its golden tests pin the 1,1,3 pattern.
+
+> `trait-gpt rank`
+
