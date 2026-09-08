@@ -117,3 +117,10 @@ Olympic-style competition ranking gives tied tokens the same rank and then skips
 
 > `trait-gpt rank`
 
+
+## 2026-09-08 — AI/rarity tip: Percentiles need a defined direction — 0.0 is rarest here
+
+Sites differ: some report percentile 99 for the rarest, others 0. trait-gpt defines percentile = 100 * (rank-1) / (N-1) so 0.0 means rarest and 100.0 means most common, and the Streamlit app renders a progress bar as 1.0 - percentile/100 so the rarest token shows a full bar. Document your direction in one sentence; a silent convention flip breaks every downstream comparison.
+
+> `trait-gpt rank --top 1 --json`
+
