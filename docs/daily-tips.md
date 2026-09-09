@@ -124,3 +124,10 @@ Sites differ: some report percentile 99 for the rarest, others 0. trait-gpt defi
 
 > `trait-gpt rank --top 1 --json`
 
+
+## 2026-09-09 — AI/rarity tip: CLIP zero-shot tagging: fixed candidate list beats free-form prompts
+
+Zero-shot image classification scores the image against *your* candidate labels — the output can only be as good as the list. Use a curated, distinct label set ("pixel art", "royal crown", "vaporwave"…), keep labels short and visual, and drop candidates below a confidence floor (trait-gpt keeps score >= top * 0.01). Broad overlapping labels make the model hedge and the tags go mushy.
+
+> `trait-gpt tags 7 --clip`
+
