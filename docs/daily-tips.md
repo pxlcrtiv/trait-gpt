@@ -131,3 +131,10 @@ Zero-shot image classification scores the image against *your* candidate labels 
 
 > `trait-gpt tags 7 --clip`
 
+
+## 2026-09-10 — AI/rarity tip: Small models on CPU are a feature, not a compromise
+
+CLIP ViT-B/32 zero-shot tags a 384×384 image in well under a second on a laptop CPU once the model is loaded. BLIP-base captions one in a few seconds. For batch jobs, load the pipeline once and reuse it (Streamlit `@st.cache_resource` does exactly this) — pipeline construction is the expensive part, inference is cheap.
+
+> `pip install -r requirements.txt && streamlit run app.py`
+
