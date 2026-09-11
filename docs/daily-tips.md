@@ -138,3 +138,10 @@ CLIP ViT-B/32 zero-shot tags a 384×384 image in well under a second on a laptop
 
 > `pip install -r requirements.txt && streamlit run app.py`
 
+
+## 2026-09-11 — AI/rarity tip: Graceful degradation: model paths must never be hard requirements
+
+A demo that dies when a model can't download is a broken demo. trait-gpt's rule: CLIP missing → keyword tags derived from traits (labeled `keyword`); BLIP missing → template description (labeled `template`). Every result carries a `method` field so the UI can say exactly which path produced it — an honest fallback beats a silent fake.
+
+> `trait-gpt tags 7`
+
