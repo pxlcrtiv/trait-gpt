@@ -145,3 +145,10 @@ A demo that dies when a model can't download is a broken demo. trait-gpt's rule:
 
 > `trait-gpt tags 7`
 
+
+## 2026-09-12 — AI/rarity tip: Golden tests pin the math; mocks pin the plumbing
+
+Rarity formulas deserve golden tests with hand-computed expected values (trait-gpt ships rare3.json: three tokens whose scores 2.25 / 1.5 / 2.25 and ranks 1 / 3 / 1 are verified by hand in the test docstring). Model code deserves mocks — a fake pipeline returning canned scores verifies label selection and thresholding without downloading 600 MB. Keep the suite green with no network.
+
+> `python -m pytest tests/ -q`
+
