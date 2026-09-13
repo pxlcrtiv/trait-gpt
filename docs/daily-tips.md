@@ -152,3 +152,10 @@ Rarity formulas deserve golden tests with hand-computed expected values (trait-g
 
 > `python -m pytest tests/ -q`
 
+
+## 2026-09-13 — AI/rarity tip: Determinism is a feature: same input, same output, same bytes
+
+trait-gpt's rarity engine is pure math (no randomness), its fixture regenerates byte-identically from a fixed seed, and its procedural token art renders to identical PNG bytes every run — all pinned by tests. When numbers or images shift run-to-run, users can't reproduce your claims. Any randomness you add (art jitter, tie-breaking) needs a documented, fixed seed.
+
+> `python data/fixtures/make_fixture.py`
+
