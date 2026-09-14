@@ -159,3 +159,10 @@ trait-gpt's rarity engine is pure math (no randomness), its fixture regenerates 
 
 > `python data/fixtures/make_fixture.py`
 
+
+## 2026-09-14 — AI/rarity tip: A bundled fixture makes the demo work with zero keys and zero network
+
+Real collection APIs need keys; model hubs need bandwidth. trait-gpt ships an offline fixture collection (24 Pixel Cats, 4 traits, procedurally rendered art) so `streamlit run app.py` shows the full rarity → tags → descriptions pipeline with no environment setup. The Reservoir client is a real optional path — the fixture is the guarantee.
+
+> `streamlit run app.py`
+
