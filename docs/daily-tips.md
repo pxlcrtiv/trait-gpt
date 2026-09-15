@@ -166,3 +166,10 @@ Real collection APIs need keys; model hubs need bandwidth. trait-gpt ships an of
 
 > `streamlit run app.py`
 
+
+## 2026-09-15 — AI/rarity tip: Template descriptions with trait interpolation are grammatically tricky — handle articles
+
+English articles depend on the noun: 'a crown' but 'aviator goggles' and 'no accessory'. A naive 'wearing a {value}' template produces 'wearing a goggles'. trait-gpt's template path keeps a small article map for accessories and falls back to trait-specific sentence templates for everything else. If your templates interpolate nouns, ship an article table and test it (`test_accessory_articles`).
+
+> `trait-gpt describe 7`
+
