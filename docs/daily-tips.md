@@ -173,3 +173,10 @@ English articles depend on the noun: 'a crown' but 'aviator goggles' and 'no acc
 
 > `trait-gpt describe 7`
 
+
+## 2026-09-16 — AI/rarity tip: Label which model path ran — in the data, not just the UI
+
+trait-gpt returns `method: clip | keyword` on every tag result and `template | blip` on every description, so logs, JSON exports, and notebooks all know what produced each value. A result without provenance is a claim you can't audit. If you export rarity data, export the method alongside the score.
+
+> `trait-gpt describe 7 --json`
+
