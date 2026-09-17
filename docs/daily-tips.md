@@ -180,3 +180,10 @@ trait-gpt returns `method: clip | keyword` on every tag result and `template | b
 
 > `trait-gpt describe 7 --json`
 
+
+## 2026-09-17 — AI/rarity tip: Reservoir tokenIds arrive as strings — sometimes 'contract:tokenId'
+
+The Reservoir v7 API returns tokenId as an int for some contracts and `0xcontract:tokenId` strings for others. trait-gpt's parser splits on the last ':' and coerces to int, with tests pinning both forms. If you parse ERC-721 data from any API, expect the string form and normalize early — a crash halfway through a batch is the alternative.
+
+> `python -c "from trait_gpt.collection import load_collection; c = load_collection(); print(c.n_tokens, 'tokens')"`
+
