@@ -306,3 +306,10 @@ Zero-shot image classification scores the image against *your* candidate labels 
 
 > `trait-gpt tags 7 --clip`
 
+
+## 2026-10-06 — AI/rarity tip: Graceful degradation: model paths must never be hard requirements
+
+A demo that dies when a model can't download is a broken demo. trait-gpt's rule: CLIP missing → keyword tags derived from traits (labeled `keyword`); BLIP missing → template description (labeled `template`). Every result carries a `method` field so the UI can say exactly which path produced it — an honest fallback beats a silent fake.
+
+> `trait-gpt tags 7`
+
