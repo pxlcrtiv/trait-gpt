@@ -18,6 +18,32 @@ from trait_gpt.clip_tagger import (  # noqa: F401  (imported for monkeypatch tar
 from trait_gpt.models import TaggedAttributes, Token
 
 
+class TestCacheCompleteness:
+    """The exported clip_model_cached() must use the strict completeness
+    check — a partial (in-progress or interrupted) download must not
+    count as cached, or the tagger would try to load truncated weights."""
+
+    def test_partial_download_not_cached(self, monkeypatch, tmp_path) -> None:
+        marker = tmp_path / "hub" / "models--openai--clip-vit-base-patch32"
+        (marker / "snapshots" / "partial").mkdir(parents=True)
+        # Download in progress: blobs present but no committed weights file.
+        (marker / "snapshots" / "partial" / "pytorch_model.bin.incomplete").write_text("x")
+        monkeypatch.setattr(clip_tagger, "CLIP_CACHE_MARKER", marker)
+        assert not clip_model_cached()
+
+    def test_committed_weights_cached(self, monkeypatch, tmp_path) -> None:
+        marker = tmp_path / "hub" / "models--openai--clip-vit-base-patch32"
+        snap = marker / "snapshots" / "final"
+        snap.mkdir(parents=True)
+        (snap / "pytorch_model.bin").write_bytes(b"weights")
+        monkeypatch.setattr(clip_tagger, "CLIP_CACHE_MARKER", marker)
+        assert clip_model_cached()
+
+    def test_missing_marker_not_cached(self, monkeypatch, tmp_path) -> None:
+        monkeypatch.setattr(clip_tagger, "CLIP_CACHE_MARKER", tmp_path / "nope")
+        assert not clip_model_cached()
+
+
 class TestKeywordFallback:
     def test_crown_token_tags(self) -> None:
         token = Token(token_id=1, traits={"accessory": "crown"})

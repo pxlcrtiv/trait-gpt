@@ -76,11 +76,6 @@ _KEYWORD_TAGS: dict[str, list[str]] = {
 _ART_TAGS = ["pixel art", "cute", "cartoon character", "cat face"]
 
 
-def clip_model_cached() -> bool:
-    """True if the CLIP model is already in the local HF cache (no download)."""
-    return CLIP_CACHE_MARKER.exists()
-
-
 def keyword_tags(token: Token, limit: int = 4) -> TaggedAttributes:
     """Deterministic trait-derived tags (``method="keyword"``)."""
     tags: list[str] = []
