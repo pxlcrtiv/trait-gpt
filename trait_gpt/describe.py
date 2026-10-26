@@ -58,26 +58,18 @@ class BlipDescriber:
     def _model_cached() -> bool:
         from pathlib import Path
 
+        from .hf_cache import model_cached
+
         marker = Path.home() / ".cache" / "huggingface" / "hub" / (
             "models--Salesforce--blip-image-captioning-base"
         )
-        if not marker.exists():
-            return False
-        # Stale *.incomplete markers can survive a finished download — the
-        # real test is the weights file inside a snapshot.
-        return any(
-            (snapshot / "pytorch_model.bin").is_file()
-            for snapshot in marker.glob("snapshots/*")
-        )
+        # Single source of truth for cache completeness (handles partial
+        # *.incomplete downloads consistently with the CLIP path).
+        return model_cached(marker, "pytorch_model.bin")
 
     def _ensure_pipe(self):
         if self._processor is None:
-            from pathlib import Path
-
-            marker = Path.home() / ".cache" / "huggingface" / "hub" / (
-                "models--Salesforce--blip-image-captioning-base"
-            )
-            if self.require_cached and not marker.exists():
+            if self.require_cached and not self._model_cached():
                 raise RuntimeError(
                     f"BLIP model {BLIP_MODEL} not cached; downloads disabled"
                 )

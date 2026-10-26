@@ -30,23 +30,14 @@ CLIP_CACHE_MARKER = Path.home() / ".cache" / "huggingface" / "hub" / (
 
 
 def _model_complete(marker: Path, weights_name: str) -> bool:
-    """True when the model is fully present in the HF cache.
+    """Deprecated alias for :func:`trait_gpt.hf_cache.model_cached`.
 
-    The marker directory exists while a download is *in progress*, so we
-    additionally require the weights file — a partial download must not
-    count as "cached" (it would make tests hang mid-download).
+    Resolved at call time so monkeypatching ``trait_gpt.hf_cache.model_cached``
+    propagates consistently (mirrors :class:`BlipDescriber._model_cached`).
     """
-    if not marker.exists():
-        return False
-    for snapshot in marker.glob("snapshots/*"):
-        if (snapshot / weights_name).is_file():
-            return True
-    # Some models store weights as the snapshot's only file set; accept an
-    # empty snapshot dir only if the marker is fully committed (no
-    # *.incomplete files anywhere under it).
-    if list(marker.rglob("*.incomplete")):
-        return False
-    return any(snapshot.is_dir() for snapshot in marker.glob("snapshots/*"))
+    from .hf_cache import model_cached
+
+    return model_cached(marker, weights_name)
 
 
 def clip_model_cached() -> bool:
