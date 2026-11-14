@@ -575,7 +575,18 @@ Newer pandas majors change copy semantics and value handling in quiet ways. trai
 
 ## 2026-11-13 — AI/rarity tip: A rarity API should degrade the same way the demo does
 
+<<<<<<< Updated upstream
 trait-gpt's `load_collection` resolves: local file path → fixture; anything else → Reservoir (key required); nothing → bundled fixture. Same function, three behaviors, all documented in the docstring, all covered by tests. When your loader has fallbacks, encode the fallback *order* in code and tests — prose in a README drifts, tests don't.
 
 > `python -c "from trait_gpt.collection import load_collection; print(load_collection().name)"`
+
+=======
+trait-gpt's `load_collection` resolves: local file path → fixture; anything else → Reservoir (key required); nothing → bundled fixture. Same function, three behaviors, all documented in the docstring, all covered by tests. When your loader has fallba
+>>>>>>> Stashed changes
+
+## 2026-11-14 — AI/rarity tip: Test the demo path, not just the library
+
+Library tests prove the math; a CLI smoke test proves the product. trait-gpt's suite runs the real entry point in-process (`main([...])`) and asserts on JSON output, unknown-token exits, and the no-argument fixture default — plus a golden check that the bundled fixture's #7 is rank 1 (score 17.0). If the demo breaks, a test fails.
+
+> `trait-gpt rank --json`
 
